@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/38/38464.png">
+  <title>Lista de Ejercicios</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/38/38464.png"> 
+  <link rel="stylesheet" href="/css/perfil.css"> 
+  <script src="/js/ejercicios.js"></script>
+</head>
+<body>
+  <div sec:authorize="isAuthenticated()">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <a class="navbar-brand">My pr´s</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" th:href="@{/perfil}" th:utext="#{nav_perfil}"><i class="fas fa-user"></i> Perfil</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" th:href="@{/historial}"  th:utext="#{nav_historial}"><i class="fas fa-history"></i> Historial</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" th:href="@{/entrenamiento}" th:utext="#{nav_entrenamiento}"><i class="fas fa-dumbbell"></i> Entrenamiento</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" th:href="@{/ejercicios}" th:utext="#{nav_ejercicios}"><i class="fas fa-running"></i> Ejercicios</a>
+              </li>
+              <li class="nav-item">
+                <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="nav-link custom-link open-login-modal" data-toggle="modal" data-target="#loginModal" th:utext="#{nav_iniciar}"><i class="fas fa-sign-in-alt"></i>Iniciar sesión</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link custom-link" th:utext="#{nav_cerrar}"><i class="fas fa-sign-in-alt"></i>Cerrar sesión</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+  <br>
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- Card 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" th:text="#{his_press}">Press banca</h5>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modalEjercicio1" th:text="#{his_ver}">Ver Detalles</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" th:text="#{his_deadlift}">Peso muerto</h5>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modalEjercicio2" th:text="#{his_ver}">Ver Detalles</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" th:text="#{his_squat}">Sentadilla</h5>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modalEjercicio3" th:text="#{his_ver}">Ver Detalles</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ejercicio 1 -->
+<div class="modal fade" id="modalEjercicio1" tabindex="-1" role="dialog" aria-labelledby="modalEjercicio1Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- Agregado el título aquí -->
+        <h4 class="modal-title" id="modalEjercicio1Label" th:text="#{his_press}">Press banca</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th th:text="#{his_peso}">Peso (kg)</th>
+              <th th:text="#{his_fecha}">Fecha</th>
+              <th th:text="#{his_acciones}">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="pressBanca : ${pressBancas}">
+              <td th:text="${pressBanca.peso}"></td>
+              <td th:text="${#dates.format(pressBanca.fecha, 'yyyy-MM-dd')}"></td>
+              <td>
+                <div class="d-flex justify-content-between">
+                  <a class="btn btn-primary" th:href="@{/historial/press-banca/editar/{id}(id=${pressBanca.id})}">
+                    <i class="fas fa-edit"></i> 
+                  </a>
+                  <a class="btn btn-danger" th:href="@{/historial/press-banca/eliminar/{id}(id=${pressBanca.id})}">
+                    <i class="fas fa-trash-alt"></i> 
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-success" th:href="@{/historial/press-banca/agregar}">
+          <i class="fas fa-plus"></i> 
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fas fa-times"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Ejercicio 2 -->
+<div class="modal fade" id="modalEjercicio2" tabindex="-1" role="dialog" aria-labelledby="modalEjercicio2Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEjercicio2Label" th:text="#{his_deadlift}">Peso Muerto</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th th:text="#{his_peso}">Peso (kg)</th>
+              <th th:text="#{his_fecha}">Fecha</th>
+              <th th:text="#{his_acciones}">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="pesoMuerto : ${pesoMuertos}">
+              <td th:text="${pesoMuerto.peso}"></td>
+              <td th:text="${pesoMuerto.fecha}"></td>
+              <td>
+                <div class="d-flex justify-content-between">
+                  <a class="btn btn-primary" th:href="@{/historial/peso-muerto/editar/{id}(id=${pesoMuerto.id})}">
+                    <i class="fas fa-edit"></i> 
+                  </a>
+                  <a class="btn btn-danger" th:href="@{/historial/peso-muerto/eliminar/{id}(id=${pesoMuerto.id})}">
+                    <i class="fas fa-trash-alt"></i> 
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-success" th:href="@{/historial/peso-muerto/agregar}">
+          <i class="fas fa-plus"></i> 
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fas fa-times"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Ejercicio 3 -->
+<div class="modal fade" id="modalEjercicio3" tabindex="-1" role="dialog" aria-labelledby="modalEjercicio3Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEjercicio3Label" th:text="#{his_squat}">Sentadilla</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th th:text="#{his_peso}">Peso (kg)</th>
+              <th th:text="#{his_fecha}">Fecha</th>
+              <th th:text="#{his_acciones}">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="sentadilla : ${sentadillas}">
+              <td th:text="${sentadilla.peso}"></td>
+              <td th:text="${sentadilla.fecha}"></td>
+              <td>
+                <div class="d-flex justify-content-between">
+                  <a class="btn btn-primary" th:href="@{/historial/sentadilla/editar/{id}(id=${sentadilla.id})}">
+                    <i class="fas fa-edit"></i> 
+                  </a>
+                  <a class="btn btn-danger" th:href="@{/historial/sentadilla/eliminar/{id}(id=${sentadilla.id})}">
+                    <i class="fas fa-trash-alt"></i> 
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-success" href="/historial/sentadilla/agregar">
+          <i class="fas fa-plus"></i> 
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fas fa-times"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de Información -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-top-right" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel" th:text="#{his_grafica}">Gráfica</h5>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p th:text="#{his_p1}">Para ver la gráfica, debe presionar el botón de "ver detalles" en el ejercicio que quiera visualizar.</p>
+        </div>
+      </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel" th:text="#{his_registro}">Registro de peso</h5>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p th:text="#{his_p2}">Al presionar el botón de "ver detalles", aparecerá una tabla que podrá usar para registrar sus pesos en los ejercicios.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gráfico -->
+<div class="container mt-5">
+  <canvas id="myChart"></canvas>
+  <i class="fas fa-info-circle" id="info-icon" data-toggle="modal" data-target="#infoModal"></i>
+</div>
+</div>
+<!-- Agrega enlaces a las bibliotecas de jQuery, Popper.js, Bootstrap JS y Chart.js al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

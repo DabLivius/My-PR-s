@@ -1,0 +1,146 @@
+    /* Estilos personalizados */
+    .navbar {
+        background-color: #f2f2f2; /* Gris claro */
+      }
+  
+  
+      .navbar-nav {
+        width: 100%; /* Distribuir enlaces a lo largo del ancho del nav */
+        display: flex;
+        justify-content: space-around;
+      }
+  
+      .nav-item {
+        text-align: center;
+      }
+  
+      .nav-lin {
+        color: #333; /* Gris oscuro */
+        transition: color 0.3s, border-bottom 0.3s;
+        border-bottom: 2px solid transparent; /* Línea transparente debajo de los enlaces */
+      }
+      .custom-link {
+        border-radius: 20px; /* Ajusta el valor para cambiar la redondez de los bordes */
+        background-color: #fff; /* Fondo negro */
+        color: #fff; /* Texto blanco */
+        padding: 5px 15px; /* Ajusta el espacio interior */
+    }
+      .nav-link:hover{
+        color: #666; /* Gris medio */
+        border-bottom: 2px solid #666; /* Línea gris debajo del enlace al pasar el cursor sobre él */
+      }
+  
+      .nav-link .fas {
+        margin-right: 5px; /* Espacio entre el icono y el texto del enlace */
+      }
+  
+
+      body {
+        background-color: #f8f9fa;
+      }
+  
+      .container {
+        max-width: 600px;
+      }
+  
+      .card {
+        margin-bottom: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+  
+      .card-header {
+        background-color: #000;
+        color: #ffffff;
+        padding: 10px;
+      }
+  
+      .card-title {
+        margin-bottom: 0;
+      }
+  
+      .card-body, .card-footer {
+        background-color: #ffffff;
+        padding: 15px;
+      }
+  
+      .table th, .table td {
+        border: 1px solid #ced4da;
+      }
+  
+      .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+  
+      .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+  
+      .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
+  
+      .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+      }
+  
+      .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+      }
+  
+      .btn-outline-danger:hover {
+        color: #ffffff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
+  
+      .text-danger {
+        color: #dc3545;
+      }
+      input {
+          border: none;
+          outline: none;
+      }
+      input[type="number"] {
+              width: 50px; /* Puedes ajustar el valor según tus necesidades */
+          }
+        
+  
+      .btn-link {
+        text-decoration: none; /* Elimina la decoración de enlace */
+        color: #fff; /* Color del texto */
+        font-size: 1.25rem; /* Tamaño de fuente */
+        font-weight: bold; /* Peso de la fuente */
+      }
+  
+      .btn-link:hover {
+        color: #fff; /* Color del texto al pasar el ratón */
+      }
+  
+      .card-body {
+        background-color: #fff; /* Color de fondo del cuerpo de la tarjeta */
+      }
+
+  .intro-header {
+    font-size: 28px;
+    color: #000; /* Azul brillante, puedes cambiarlo según tu preferencia */
+    margin-bottom: 20px;
+  }
+
+  .intro-text {
+    font-size: 18px;
+    color: #333;
+    text-align: justify;
+    margin-bottom: 30px;
+  }
+
+    .custom-container {
+      max-width: 800px; /* Ajusta el valor según tus necesidades */
+      margin: 0 auto;   /* Centra el contenedor */
+    }

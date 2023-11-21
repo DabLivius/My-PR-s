@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/entrenamiento.css">
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/38/38464.png">
+  <title th:text="#{entren_titulo}">Rutina de Ejercicios</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <a class="navbar-brand">My pr´s</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/perfil}" th:utext="#{nav_perfil}"><i class="fas fa-user"></i> Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/historial}"  th:utext="#{nav_historial}"><i class="fas fa-history"></i> Historial</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/entrenamiento}" th:utext="#{nav_entrenamiento}"><i class="fas fa-dumbbell"></i> Entrenamiento</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ejercicios}" th:utext="#{nav_ejercicios}"><i class="fas fa-running"></i> Ejercicios</a>
+            </li>
+            <li class="nav-item">
+              <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="nav-link custom-link open-login-modal" data-toggle="modal" data-target="#loginModal" th:utext="#{nav_iniciar}"><i class="fas fa-sign-in-alt"></i>Iniciar sesión</a>
+			        <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link custom-link" th:utext="#{nav_cerrar}"><i class="fas fa-sign-in-alt"></i>Cerrar sesión</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- Agrega el modal en tu página, asegúrate de que el ID coincida con data-target en el enlace -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="loginModalLabel">Inicio de sesión</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Contenido del formulario de inicio de sesión -->
+              <form th:action="@{/login}" method="post">
+
+                <div th:if=${param.error}>
+                  <div class="alert alert-danger" th:text="#{log_usuario_invalido}">Usuario o contraseña
+                    inválidos</div>
+                </div>
+      
+      
+                <div class="form-group">
+                  <label  for="username" th:text="#{log_nombre_usuario}"> Correo </label> <input id="username"  name="username" type="text" class="form-control"
+                    required autofocus="autofocus" th:placeholder="#{log_placeholder_email}">
+                </div>
+      
+                <div class="form-group">
+                  <label  for="password" th:text="#{log_password}">Password : </label> <input
+                    id="password" type="password"  name="password" class="form-control" required
+                    autofocus="autofocus" th:placeholder="#{log_placeholder_password}">
+                </div>
+      
+                <div class="form-group">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="submit" class="form-control btn btn-primary" name="login-submit" id="login-submit" th:value="#{log_iniciar_sesion}" />
+                      </div>
+                      <div class="col-md-6">
+                          <a th:href="@{/registro}" class="btn btn-success btn-block" th:text="#{log_crear_cuenta}">Crear cuenta</a>
+                      </div>
+                  </div>
+              </div>
+            </form>       
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{log_cerrar}">Cerrar</button>
+        </div>
+      </div>
+  </div>
+</div>
+<br>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="intro-header" th:text="#{entren_descubre}">Descubre Nuestras Rutinas</h2>
+      <p class="intro-text" th:text="#{entren_bienvenido}">Bienvenido a "My pr's", tu compañero de entrenamiento personal. Aquí encontrarás rutinas cuidadosamente diseñadas para mejorar tu fuerza y resistencia en diferentes grupos musculares. ¡Prepárate para superar tus límites y alcanzar tus máximos personales!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ppl -->
+<div class="container mt-5">
+    <h4 th:text="#{entren_h4}">Rutina de 3 a 6 días (PPL)</h4>
+    <br>
+    <p th:text="#{entren_h4_p1}">Push, pull, leg, es una técnica de musculación que trabaja el cuerpo en tres grupos diferentes: los músculos de la parte superior del cuerpo capaces de empujar (push), los músculos de la parte superior del cuerpo capaces de tirar (pull) y las piernas (leg).</p>
+    <p th:text="#{entren_h4_p2}">La rutina puede realizarse solo una vez a la semana si no se cuenta con el suficiente tiempo, de lo contrario se puede repetir dejando un día de descanso por ciclo</p>
+    <hr>
+</div>
+
+
+    
+<div class="container mt-5">
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" th:text="#{entren_empuje}">
+            Empuje
+          </button>
+          <i class="fas fa-info-circle" data-toggle="modal" data-target="#pushModal"></i>
+        </h5>
+      </div>
+
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_pressbancaconbarra}">Press banca con barra</h6>
+          <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_tricepenpoleaalta}">Tricep en polea alta</h6>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_elevacioneslaterales}">Elevaciones laterales</h6>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Filas de ejemplo -->
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_aperturasenmaquina}">Aperturas en máquina</h6>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Filas de ejemplo -->
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_pressfrancesconmancuernas}">Press francés con mancuernas</h6>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_presshombroconbarra}">Press de hombro con barra</h6>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col" th:text="#{entren_serie}">Serie</th>
+                  <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                  <th scope="col" th:text="#{entren_serie}">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td th:text="#{entren_1}">1</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+                <tr>
+                  <td th:text="#{entren_2}">2</td>
+                  <td></td>
+                  <td th:text="#{entren_12}">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Agrega el modal correspondiente al Push -->
+<div class="modal fade" id="pushModal" tabindex="-1" role="dialog" aria-labelledby="pushModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pushModalLabel" th:text="#{entren_sobre_empuje}">Sobre "Empuje"</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p th:text="#{entren_empuje_p}">La rutina de empuje es un tipo de entrenamiento físico que se centra en el desarrollo de los músculos que están involucrados principalmente en movimientos de empuje, como los que se realizan al empujar objetos lejos del cuerpo. Esta rutina suele dirigirse a los músculos del pecho, hombros y tríceps.</p>
+        <!-- Agrega más contenido según sea necesario -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{entren_cerrar}">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              Tracción
+          </button>
+          <i class="fas fa-info-circle" data-toggle="modal" data-target="#pullModal"></i>
+      </h5>
+      </div>
+<!-- Modal para la información de Pull -->
+<div class="modal fade" id="pullModal" tabindex="-1" role="dialog" aria-labelledby="pullModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="pullModalLabel" th:text="#{entren_sobre_traccion}">Sobre "Tracción"</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Contenido del modal -->
+              <p th:text="#{entren_traccion_p}">La rutina de tracción se centra en el desarrollo de los músculos que están involucrados principalmente en movimientos de tracción, como levantar objetos hacia el cuerpo. Este tipo de entrenamiento trabaja principalmente los músculos de la espalda, bíceps y antebrazos. </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{entren_cerrar}">Cerrar</button>
+          </div>
+      </div>
+  </div>
+</div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_jalonalpecho}">Jalón al pecho</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Filas de ejemplo -->
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_curlpredicator}">Curl predicator</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_remoconbarra}">Remo con barra</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_curlmartillo}">Curl martillo</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+              Pierna
+          </button>
+          <i class="fas fa-info-circle" data-toggle="modal" data-target="#legModal"></i>
+      </h5>
+      </div>
+    <!-- Modal para la información de Pierna -->
+<div class="modal fade" id="legModal" tabindex="-1" role="dialog" aria-labelledby="legModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="legModalLabel" th:text="#{entren_sobre_pierna}">Sobre "Pierna"</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Contenido del modal -->
+              <p th:text="#{entren_pierna_p}">La rutina de pierna se enfoca en el desarrollo de los músculos de las piernas, incluyendo cuádriceps, isquiotibiales, glúteos y pantorrillas. Una rutina de pierna bien equilibrada suele incluir ejercicios para trabajar tanto la parte frontal como posterior de las piernas, así como los músculos estabilizadores. </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{entren_cerrar}">Cerrar</button>
+          </div>
+      </div>
+  </div>
+</div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_sentadillahack}">Sentadilla hack
+          </h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_femoralacostadoenmaquina}">Femoral acostado en maquina</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_extensiondepierna}">Extensión de pierna</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_hipthrust}">Hip thrust</h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted" th:text="#{entren_pantorrillaenmaquina}">Pantorrilla en máquina
+          </h6>
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th scope="col" th:text="#{entren_serie}">Serie</th>
+                <th scope="col" th:text="#{entren_peso}">Peso (Kg)</th>
+                <th scope="col" th:text="#{entren_serie}">Reps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td th:text="#{entren_1}">1</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+              <tr>
+                <td th:text="#{entren_2}">2</td>
+                <td></td>
+                <td th:text="#{entren_12}">12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Agregamos los scripts de Bootstrap y Font Awesome al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
